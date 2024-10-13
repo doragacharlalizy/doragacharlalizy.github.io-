@@ -1,40 +1,46 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
-// Import your certificate PDFs
 import awsCertificate from '../assets/aws_certificate.pdf';
-import nptelCertificate from '../assets/nptel_certificate.pdf';
+import pythonCertificate from '../assets/python_certificate.pdf';  // Assuming you have a Python certificate PDF
+import nptelCertificate from '../assets/nptel_certificate.jpg';
 import courseraCertificate from '../assets/coursera_certificate.pdf';
+import aiCourseCertificate from '../assets/ai_course_certificate.pdf';  // Assuming you have an AI course certificate PDF
 
-const colors = {
-  gunmetal: '#30343f',
-  ghostWhite: '#fafaff',
-  spaceCadet: '#1e2749',
-  delftBlue: '#273469',
+// Define your colors in a central place
+const theme = {
+  colors: {
+    gunmetal: '#30343f',
+    ghostWhite: '#fafaff',
+    spaceCadet: '#1e2749',
+    delftBlue: '#273469',
+  },
 };
 
 const CertificatesContainer = styled.div`
   padding: 50px 20px;
-  color: #e0e1dd;
+  color: ${({ theme }) => theme.colors.ghostWhite};
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const Title = styled.h2`
-  font-size: 2em;
+
+const Title = styled.h1`
+  font-size: 3rem;
   margin-bottom: 30px;
   text-align: center;
-  color: ${colors.ghostWhite};
+  color: #fafaff;
 
   @media (max-width: 768px) {
-    font-size: 1.5em;
+    font-size: 2.5rem;
   }
 
   @media (max-width: 480px) {
-    font-size: 1.2em;
+    font-size: 1.5em;
   }
 `;
+
 
 const CardContainer = styled.div`
   display: flex;
@@ -49,7 +55,7 @@ const CardContainer = styled.div`
 `;
 
 const Card = styled.div`
-  background: linear-gradient(135deg, ${colors.spaceCadet} 30%, ${colors.delftBlue} 100%);
+  background: linear-gradient(135deg, ${({ theme }) => theme.colors.spaceCadet} 30%, ${({ theme }) => theme.colors.delftBlue} 100%);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   border-radius: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -71,9 +77,6 @@ const Card = styled.div`
   }
 
   @media (max-width: 480px) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: 15px;
   }
 `;
@@ -85,7 +88,6 @@ const CardContent = styled.div`
 const CardTitle = styled.h3`
   font-size: 1.8em;
   margin-bottom: 10px;
-  color: ${colors.ghostWhite};
 
   @media (max-width: 768px) {
     font-size: 1.5em;
@@ -113,7 +115,6 @@ const Date = styled.p`
 const Description = styled.p`
   font-size: 1em;
   line-height: 1.6;
-  color: ${colors.ghostWhite};
 
   @media (max-width: 768px) {
     font-size: 0.9em;
@@ -133,6 +134,7 @@ const ButtonGroup = styled.div`
   @media (max-width: 768px) {
     margin-top: 15px;
     gap: 5px;
+    justify-content:center;
   }
 
   @media (max-width: 480px) {
@@ -145,18 +147,18 @@ const Button = styled.a`
   display: inline-block;
   padding: 10px 20px;
   font-size: 1em;
-  color: ${colors.gunmetal};
+  color: ${({ theme }) => theme.colors.gunmetal};
   font-weight: 600;
-  background-color: ${colors.ghostWhite};
+  background-color: ${({ theme }) => theme.colors.ghostWhite};
   text-decoration: none;
   border-radius: 25px;
   transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
-  border: 2px solid ${colors.gunmetal};
-  
+  border: 2px solid ${({ theme }) => theme.colors.gunmetal};
+
   &:hover {
-    background-color: ${colors.spaceCadet};
-    color: ${colors.ghostWhite};
-    border-color: ${colors.ghostWhite};
+    background-color: ${({ theme }) => theme.colors.spaceCadet};
+    color: ${({ theme }) => theme.colors.ghostWhite};
+    border-color: ${({ theme }) => theme.colors.ghostWhite};
   }
 
   @media (max-width: 768px) {
@@ -172,54 +174,70 @@ const Button = styled.a`
 
 const certificates = [
   {
-    title: 'AWS - Academy Foundation',
+    id: 'aws-certificate',
+    title: 'AWS - Cloud Foundations',
     date: 'OCT-DEC 2022',
     description:
-      'Completed the AWS Academy Foundation program, mastering cloud computing and AWS services to design, develop, and deploy scalable applications.',
+      'Completed a course on AWS Cloud Foundations, gaining knowledge in cloud computing and AWS services under the guidance of AWS Architect Aditya Sundar.',
     downloadLink: awsCertificate,
   },
+ 
   {
+    id: 'nptel-certificate',
     title: 'NPTEL - Internet of Things',
     date: 'JUL-OCT 2022',
     description:
-      'Completed the Internet of Things course, understanding IoT concepts and technologies, and gaining hands-on experience in designing IoT solutions.',
+      'Acquired a comprehensive understanding of IoT basics and sensor workings through the NPTEL course.',
     downloadLink: nptelCertificate,
   },
   {
+    id: 'coursera-certificate',
     title: 'Coursera - Data Science',
     date: 'FEB-APR 2022',
     description:
-      'Completed the Data Science course, learning data wrangling, exploratory data analysis, statistical modeling, and machine learning.',
+      'Focused on programming for Python within the Data Science domain, learning data wrangling, exploratory data analysis, statistical modeling, and machine learning.',
     downloadLink: courseraCertificate,
   },
+  
 ];
 
 const Certificates = () => {
   return (
-    <CertificatesContainer>
-      <Title>Certificates</Title>
-      <CardContainer>
-        {certificates.map((certificate, index) => (
-          <Card key={index}>
-            <CardContent>
-              <CardTitle>{certificate.title}</CardTitle>
-              <Date>Date: {certificate.date}</Date>
-              <Description>{certificate.description}</Description>
-            </CardContent>
-            <ButtonGroup>
-              {certificate.downloadLink && (
-                <Button href={certificate.downloadLink} download={`${certificate.title.replace(/\s+/g, '-')}_certificate.pdf`}>
-                  Download
+    <ThemeProvider theme={theme}>
+      <CertificatesContainer>
+        <Title>Certificates</Title>
+        <CardContainer>
+          {certificates.map((certificate) => (
+            <Card key={certificate.id}>
+              <CardContent>
+                <CardTitle>{certificate.title}</CardTitle>
+                <Date>Date: {certificate.date}</Date>
+                <Description>{certificate.description}</Description>
+              </CardContent>
+              <ButtonGroup>
+                {certificate.downloadLink && (
+                  <Button
+                    as="a"
+                    href={certificate.downloadLink}
+                    download={`${certificate.title.replace(/\s+/g, '-')}_certificate.pdf`}
+                  >
+                    Download
+                  </Button>
+                )}
+                <Button
+                  as="a"
+                  href={certificate.downloadLink}
+                  target={certificate.downloadLink ? "_blank" : undefined}
+                  rel={certificate.downloadLink ? "noopener noreferrer" : undefined}
+                >
+                  View
                 </Button>
-              )}
-              <Button href={certificate.downloadLink} target="_blank">
-                View
-              </Button>
-            </ButtonGroup>
-          </Card>
-        ))}
-      </CardContainer>
-    </CertificatesContainer>
+              </ButtonGroup>
+            </Card>
+          ))}
+        </CardContainer>
+      </CertificatesContainer>
+    </ThemeProvider>
   );
 };
 

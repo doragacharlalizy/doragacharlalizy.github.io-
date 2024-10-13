@@ -1,5 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
+import MycompanyCertificate from '../assets/MycompanyCertificate.pdf';
+import OL from '../assets/OfferLetter.pdf';
 
 const colors = {
   gunmetal: '#30343f',
@@ -16,18 +17,17 @@ const ExperienceSection = styled.div`
   align-items: center;
 `;
 
-const Title = styled.h2`
-  font-size: 2em;
+const Title = styled.h1`
+  font-size: 3rem;
   margin-bottom: 30px;
   text-align: center;
-  color: ${colors.ghostWhite};
+  color: #fafaff;
 
   @media (max-width: 768px) {
-    font-size: 1.5em;
-  }
-
+    font-size: 2.5rem;
+    
   @media (max-width: 480px) {
-    font-size: 1.2em;
+    font-size: 1.5em;
   }
 `;
 
@@ -36,12 +36,12 @@ const ExperienceContainer = styled.div`
   flex-direction: column;
   gap: 30px;
   width: 100%;
-  margin: 0 auto; /* Center container horizontally */
+  margin: 0 auto;
 
   @media (min-width: 769px) {
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center; /* Center items horizontally in row layout */
+    justify-content: center;
   }
 `;
 
@@ -55,7 +55,9 @@ const ExperienceItem = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Push content to the top and ButtonGroup to the bottom */
+  align-items: start;
+  text-align: left;
+  gap: 10px;
 
   &:hover {
     transform: scale(1.05);
@@ -65,23 +67,15 @@ const ExperienceItem = styled.div`
   @media (max-width: 768px) {
     padding: 15px;
   }
-
-  @media (max-width: 480px) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 15px;
-  }
 `;
 
 const Content = styled.div`
   flex-grow: 1;
 `;
 
-const Company = styled.div`
+const Company = styled.h2`
   font-size: 1.8em;
   font-weight: bold;
-  color: ${colors.ghostWhite};
   margin-bottom: 10px;
 
   @media (max-width: 768px) {
@@ -96,7 +90,6 @@ const Company = styled.div`
 const Role = styled.h3`
   font-size: 1.5em;
   margin-bottom: 10px;
-  color: ${colors.ghostWhite};
 
   @media (max-width: 768px) {
     font-size: 1.3em;
@@ -124,30 +117,13 @@ const Dates = styled.p`
 const Description = styled.p`
   font-size: 1em;
   line-height: 1.6;
-  color: ${colors.ghostWhite};
-
-  @media (max-width: 768px) {
-    font-size: 0.9em;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 0.8em;
-  }
+  margin-bottom: 10px;
 `;
 
 const Responsibilities = styled.ul`
   font-size: 1em;
-  color: ${colors.ghostWhite};
   margin-top: 10px;
   padding-left: 20px;
-
-  @media (max-width: 768px) {
-    font-size: 0.9em;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 0.8em;
-  }
 `;
 
 const Skills = styled.div`
@@ -155,29 +131,28 @@ const Skills = styled.div`
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
-  margin-bottom: 10px;
 `;
 
 const SkillPill = styled.span`
-  background-color: ${colors.spaceCadet};
+  background: linear-gradient(135deg, ${colors.spaceCadet} 30%, ${colors.delftBlue} 100%);
   color: ${colors.ghostWhite};
   font-size: 0.9em;
   padding: 5px 10px;
   border-radius: 20px;
   border: 1px solid ${colors.ghostWhite};
-  display: inline-block;
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
+  width:100%;
   gap: 10px;
-  margin-top: 20px;
+  margin-top: auto; /* Aligns the container to the bottom */
   flex-wrap: wrap;
-  margin-top: auto; /* Push ButtonGroup to the bottom of the container */
 
   @media (max-width: 768px) {
     margin-top: 15px;
     gap: 5px;
+      justify-content: center; /* Center buttons horizontally */
   }
 
   @media (max-width: 480px) {
@@ -227,59 +202,68 @@ const Experience = () => {
         'Contributed to various tasks, enhancing understanding of industry practices.',
       ],
       skills: ['HTML', 'CSS', 'Bootstrap', 'JavaScript', 'PHP', 'PhpMyAdmin'],
-      certificateUrl: 'path/to/mycCertificate',
+      certificateUrl: MycompanyCertificate,
       companyUrl: 'https://www.linkedin.com/company/my-company-mine-and-yours-company/',
     },
     {
       company: 'Arthashastra Intelligence, Hyderabad',
-      role: 'Frontend Developer (Intern)',
-      duration: 'Duration: 5 months',
-      description: 'Arthashastra Intelligence provides cutting-edge AI solutions for businesses across the globe.',
+      role: 'Frontend Developer',
+      duration: 'Duration: 7 months (Internship) + Full-Time Employee',
+      description: 'Arthashastra Intelligence provides cutting-edge AI solutions for businesses worldwide.',
       responsibilities: [
-        'Developed responsive interfaces using React for frontend components.',
-        'Created essential components in React using Django Rest Framework.',
-        'Built and maintained entire websites using Wordpress.',
-        'Collaborated to implement new features and enhance existing ones.',
+        'Started as an intern, transitioned to a full-time Frontend Developer role focused on React.',
+        'Developed responsive and dynamic interfaces using React for various applications.',
+        'Worked on backend integration using Django Rest Framework during the internship.',
+        'Built and maintained websites using WordPress for clients.',
+        'Collaborated with cross-functional teams to implement new features and improve existing ones.'
       ],
-      skills: ['React', 'Django Rest Framework', 'Wordpress'],
-      certificateUrl: 'path/to/arthashastraCertificate',
+      skills: ['React', 'Django Rest Framework', 'WordPress'],
+      certificateUrl: OL,
       companyUrl: 'https://arthashastra.ai/',
-    },
+    }
+    
   ];
 
   return (
     <ExperienceSection>
       <Title>Experience</Title>
       <ExperienceContainer>
-        {experienceData.map((exp, index) => (
-          <ExperienceItem key={index}>
-            <Content>
-              <Company>{exp.company}</Company>
-              <Role>{exp.role}</Role>
-              <Dates>{exp.duration}</Dates>
-              <Description>{exp.description}</Description>
-              <Responsibilities>
-                {exp.responsibilities.map((resp, idx) => (
-                  <li key={idx}>{resp}</li>
-                ))}
-              </Responsibilities>
-              <Skills>
-                {exp.skills.map((skill, idx) => (
-                  <SkillPill key={idx}>{skill}</SkillPill>
-                ))}
-              </Skills>
-            </Content>
-            <ButtonGroup>
-              <Button href={exp.certificateUrl} target="_blank">
-                View Certificate
-              </Button>
-              <Button href={exp.companyUrl} target="_blank">
-                Visit Company
-              </Button>
-            </ButtonGroup>
-          </ExperienceItem>
-        ))}
-      </ExperienceContainer>
+  {experienceData.map((exp, index) => (
+    <ExperienceItem key={index}>
+      <Content>
+        <Company>{exp.company}</Company>
+        <Role>{exp.role}</Role>
+        <Dates>{exp.duration}</Dates>
+        <Description>{exp.description}</Description>
+        <Responsibilities>
+          {exp.responsibilities.map((resp, idx) => (
+            <li key={idx}>{resp}</li>
+          ))}
+        </Responsibilities>
+        <Skills>
+          {exp.skills.map((skill, idx) => (
+            <SkillPill key={idx}>{skill}</SkillPill>
+          ))}
+        </Skills>
+      </Content>
+      <ButtonGroup>
+        {index === 1 ? ( // Check if it's the second experience
+          <Button href={exp.certificateUrl} target="_blank">
+            View Offer Letter
+          </Button>
+        ) : (
+          <Button href={exp.certificateUrl} target="_blank">
+            View Certificate
+          </Button>
+        )}
+        <Button href={exp.companyUrl} target="_blank">
+          Visit Company
+        </Button>
+      </ButtonGroup>
+    </ExperienceItem>
+  ))}
+</ExperienceContainer>
+
     </ExperienceSection>
   );
 };

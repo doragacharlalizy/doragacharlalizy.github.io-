@@ -1,4 +1,5 @@
-import React, { useState, useImperativeHandle, forwardRef } from 'react';
+// src/components/Tabs.js
+import React, { useState, useEffect, forwardRef } from 'react';
 import Skills from '../components/Skills';
 import Certificates from '../components/Certificates';
 import Education from '../components/Education';
@@ -6,6 +7,7 @@ import Experience from '../components/Experience';
 import Projects from '../components/Projects';
 import { FaCode, FaCertificate, FaGraduationCap, FaBriefcase, FaProjectDiagram } from 'react-icons/fa';
 import styled from 'styled-components';
+import eventBus from './eventBus';
 
 const colors = {
     gunmetal: '#30343fff',
@@ -77,6 +79,12 @@ const TabButton = styled.button`
 const Tabs = forwardRef((props, ref) => {
     const [activeTab, setActiveTab] = useState('Skills');
 
+    useEffect(() => {
+        eventBus.on('activateTab', (tab) => {
+            setActiveTab(tab);
+        });
+    }, []);
+
     const renderContent = () => {
         switch (activeTab) {
             case 'Skills':
@@ -93,12 +101,6 @@ const Tabs = forwardRef((props, ref) => {
                 return <Skills />;
         }
     };
-
-    useImperativeHandle(ref, () => ({
-        setActiveTab: (tab) => {
-            setActiveTab(tab);
-        }
-    }));
 
     return (
         <TabsContainer id="knowmore">

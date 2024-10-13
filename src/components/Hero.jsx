@@ -1,12 +1,14 @@
 // HeroSection.js
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { AiFillLinkedin, AiFillGithub, AiFillInstagram, AiFillTwitterCircle, AiOutlineDownload, AiFillEye } from 'react-icons/ai';
-import Typewriter from 'typewriter-effect/dist/core'; // Ensure you have installed 'typewriter-effect'
+import { AiFillLinkedin, AiFillGithub, AiOutlineDownload, AiFillEye } from 'react-icons/ai';
+import { RiWhatsappFill } from "react-icons/ri";
+import { ImMail4 } from "react-icons/im";
+import Typewriter from 'typewriter-effect/dist/core';
 import profileImage from '../assets/doragacharla_lizy.jpg';
-import resume from '../assets/doragacharla_lizy_resume.pdf'; // Importing the resume
-import starIcon from '../assets/star.png'; // Import the star icon
+import resume from '../assets/doragacharla_lizy_resume.pdf';
+import starIcon from '../assets/star.png';
 import AboutMe from "../components/AboutMe";
 
 // Colors
@@ -20,33 +22,13 @@ const colors = {
 
 // Keyframes for animations
 const rotateGear = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 `;
 
 const gearTeeth = keyframes`
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(180deg);
-  }
-`;
-
-const pulsateBackground = keyframes`
-  0% {
-    background-color: ${colors.delftBlue};
-  }
-  50% {
-    background-color: ${colors.periwinkle};
-  }
-  100% {
-    background-color: ${colors.delftBlue};
-  }
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
 `;
 
 // Styled Components
@@ -55,19 +37,17 @@ const HeroContainer = styled.section`
   justify-content: space-between;
   align-items: center;
   padding: 40px 20px;
-  height: 80vh;
-  position: relative;
+  height: 100vh;
   color: ${colors.ghostWhite};
   gap: 30px;
-  @media (max-width: 1024px) {
-    padding: 40px;
-  }
 
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 20px;
     height: auto;
     text-align: center;
+      height: 100vh;
+
   }
 `;
 
@@ -75,10 +55,6 @@ const Heading = styled.h1`
   font-size: 2.5em;
   margin-bottom: 20px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-
-  @media (max-width: 1024px) {
-    font-size: 2.2em;
-  }
 
   @media (max-width: 768px) {
     font-size: 2em;
@@ -88,11 +64,7 @@ const Heading = styled.h1`
 const Description = styled.p`
   font-size: 1.2em;
   max-width: 80%;
-
-  @media (max-width: 1024px) {
-    max-width: 100%;
-    font-size: 1em;
-  }
+  margin: 0;
 
   @media (max-width: 768px) {
     font-size: 1em;
@@ -100,18 +72,16 @@ const Description = styled.p`
 `;
 
 const LeftSection = styled.div`
-  flex: 1;
   z-index: 1;
-  position: relative;
   max-width: 50%;
   text-align: start;
-
-  @media (max-width: 1024px) {
-    max-width: 100%;
-    margin-bottom: 40px;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
   @media (max-width: 768px) {
+    max-width: 100%;
+    align-items: center;
     text-align: center;
   }
 `;
@@ -125,34 +95,30 @@ const RightSection = styled.div`
   height: 100%;
   overflow: hidden;
 
-  @media (max-width: 1024px) {
-    max-width: 100%;
-    top: 40px;
-  }
-
   @media (max-width: 768px) {
-          width: 100%;
+    width: 100%;
     margin-bottom: 20px;
+    top:50px;
   }
 `;
 
 const GearCircle = styled.div`
   position: absolute;
-  width: 300px;
-  height: 300px;
+  width: 350px;
+  height: 350px;
   border-radius: 50%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.5);
   z-index: 1;
   animation: ${rotateGear} 20s linear infinite;
   transform: rotate(-45deg);
 
-  @media (max-width: 768px) {
-    display: none; // Hide gear circle on mobile screens
+  @media (max-width: 1024px) {
+    width: 300px;
+    height: 300px;
   }
 
-  @media (max-width: 1024px) {
-    width: 250px;
-    height: 250px;
+  @media (max-width: 768px) {
+    display: none;
   }
 
   &:before, &:after {
@@ -160,13 +126,9 @@ const GearCircle = styled.div`
     position: absolute;
     width: 35px;
     height: 35px;
-    background: ${colors.delftBlue};
-    border-radius: 50%;
-    box-shadow: 0 0 0 5px ${colors.spaceCadet};
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius:50px;
     background: url(${starIcon}) center/50% no-repeat;
+    box-shadow: 0 0 0 5px ${colors.spaceCadet};
     animation: ${gearTeeth} 2s linear infinite;
   }
 
@@ -184,8 +146,8 @@ const GearCircle = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  width: 250px;
-  height: 250px;
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
   overflow: hidden;
   position: relative;
@@ -211,13 +173,8 @@ const Image = styled.img`
 
 const TypingAnimationContainer = styled.div`
   font-size: 2.2em;
-  margin-bottom: 20px;
   color: ${colors.periwinkle};
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-
-  @media (max-width: 1024px) {
-    font-size: 2em;
-  }
 
   @media (max-width: 768px) {
     font-size: 1.8em;
@@ -227,12 +184,6 @@ const TypingAnimationContainer = styled.div`
 const SocialIcons = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 20px 0;
-
-  @media (max-width: 768px) {
-    margin-bottom: 20px;
-  }
 `;
 
 const Icon = styled.a`
@@ -266,7 +217,6 @@ const Button = styled.a`
   text-decoration: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 20px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 
   &:hover {
@@ -301,16 +251,13 @@ const ScrollDownArrow = styled.div`
 `;
 
 const Hero = () => {
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
-
   useEffect(() => {
     const typewriter = new Typewriter('#typing-effect-container', {
-      strings: ['Front End Developer', 'Data Analyst'],
+      strings: ['Currently working as a Front End Developer', 'Passionate in Data Analysis and Data Science'],
       autoStart: true,
       loop: true,
       deleteSpeed: 20,
       delay: 80,
-      onComplete: () => setIsTypingComplete(true),
     });
 
     return () => {
@@ -338,29 +285,21 @@ const Hero = () => {
           <Heading>Hi, I'm Lizy Doragacharla</Heading>
           <TypingAnimationContainer id="typing-effect-container" />
           <Description>
-            I'm a passionate Front End Developer and Data Analyst with a love for creating
-            engaging user experiences and deriving insights from data.
-          </Description>
+       
+          To transition from a frontend developer role into a data-focused career as a data analyst or data scientist by leveraging existing technical skills, continuously building expertise in data-related tools and methodologies, developing practical projects, and actively networking with industry professionals to secure relevant opportunities.          </Description>
           <SocialIcons>
-            <Icon href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><AiFillLinkedin /></Icon>
-            <Icon href="https://github.com/" target="_blank" rel="noopener noreferrer"><AiFillGithub /></Icon>
-            <Icon href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><AiFillInstagram /></Icon>
-            <Icon href="https://twitter.com/" target="_blank" rel="noopener noreferrer"><AiFillTwitterCircle /></Icon>
+            <Icon href="https://www.linkedin.com/in/lizy-d-371971233/" target="_blank" rel="noopener noreferrer"><AiFillLinkedin /></Icon>
+            <Icon href="https://github.com/doragacharlalizy" target="_blank" rel="noopener noreferrer"><AiFillGithub /></Icon>
+            <Icon href="mailto:lizydoragacharla@gmail.com" target="_blank" rel="noopener noreferrer"><ImMail4 /></Icon>
+            <Icon href="https://wa.me/918106868075" target="_blank" rel="noopener noreferrer"><RiWhatsappFill /></Icon>
           </SocialIcons>
-
-          <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Button href="#about" onClick={scrollToAboutMe}>About Me</Button>
-            <Button href={resume} download>
-              <AiOutlineDownload />
-            </Button>
-            <Button href={resume} target="_blank" rel="noopener noreferrer">
-              <AiFillEye />
-            </Button>
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            <Button onClick={scrollToAboutMe}>About Me</Button>
+            <Button href={resume} download><AiOutlineDownload /></Button>
+            <Button href={resume} target="_blank" rel="noopener noreferrer"><AiFillEye /></Button>
           </div>
         </LeftSection>
       </HeroContainer>
-
-      {/* About Me Section */}
       <AboutMe />
     </>
   );

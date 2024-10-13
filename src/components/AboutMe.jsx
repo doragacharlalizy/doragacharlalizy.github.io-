@@ -1,77 +1,144 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { FaReact, FaChartLine, FaLaptopCode, FaRocket } from 'react-icons/fa'; // Importing icons
+import { FaReact, FaChartLine, FaLaptopCode, FaRocket } from 'react-icons/fa';
 import { IoArrowDownCircle, IoArrowUpCircle } from "react-icons/io5";
-import image1 from '../assets/skill1.jpg';
-import image2 from '../assets/skill2.jpg';
-import image3 from '../assets/skill3.jpg';
-import image4 from '../assets/skill4.jpg';
+import image1 from '../assets/about1.jpg';
+import image2 from '../assets/about2.webp';
+import image3 from '../assets/about3.jpeg';
+import image4 from '../assets/skill2.jpg';
 
-const fadeIn = keyframes`
+// Keyframes for rotation animation
+const rotateUp = keyframes`
   from {
-    opacity: 0;
-    transform: translateY(20px);
+    transform: rotateX(0deg);
   }
   to {
-    opacity: 1;
-    transform: translateY(0);
+    transform: rotateX(-90deg);
   }
 `;
 
-const fadeOut = keyframes`
+const rotateDown = keyframes`
   from {
-    opacity: 1;
-    transform: translateY(0);
+    transform: rotateX(0deg);
   }
   to {
-    opacity: 0;
-    transform: translateY(-20px);
+    transform: rotateX(90deg);
   }
 `;
 
+const rotateInUp = keyframes`
+  from {
+    transform: rotateX(90deg);
+  }
+  to {
+    transform: rotateX(0deg);
+  }
+`;
+
+const rotateInDown = keyframes`
+  from {
+    transform: rotateX(-90deg);
+  }
+  to {
+    transform: rotateX(0deg);
+  }
+`;
+
+// Styled components
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 50px;
+  padding: 20px;
   color: #fff;
   overflow: hidden;
-  position: relative;
-
-  @media (max-width: 768px) {
-    padding: 20px;
-  }
-    
-`;
-
-const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 1200px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-   
-`;
-
-const Section = styled.div`
-  flex: 1;
-  padding: 20px;
-  animation: ${props => props.fadeIn ? fadeIn : fadeOut} 1s ease-in-out;
-  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-  max-width: 600px;
-  
-  @media (max-width: 768px) {
-    max-width: 100%;
-  }
 `;
 
 const Title = styled.h1`
   font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #fafaff;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+  }
+`;
+
+const CubeContainer = styled.div`
+  position: relative;
+  width: 50%;
+  height: 400px;
+  perspective: 1000px;
+  margin-bottom: 20px;
+  
+  @media (max-width: 768px) {
+    width: 80%;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    height: 300px;
+  }
+`;
+
+const Cube = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: rotateX(${props => props.rotation}deg);
+  transition: transform 0.5s;
+  animation: ${props => props.slideIn ? (props.direction === 'up' ? rotateInUp : rotateInDown) : (props.direction === 'up' ? rotateUp : rotateDown)} 0.5s forwards;
+`;
+
+const Face = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  border: 2px solid #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+  backface-visibility: hidden;
+  padding: 20px;
+ @media (max-width: 768px) {
+  flex-direction:column;
+  }
+`;
+
+const Front = styled(Face)`
+  transform: rotateX(0deg) translateZ(200px);
+`;
+
+const Back = styled(Face)`
+  transform: rotateX(180deg) translateZ(200px);
+`;
+
+const Side = styled(Face)`
+  transform: rotateY(${props => props.rotate}deg) translateZ(200px);
+`;
+
+const Section = styled.div`
+  padding: 10px;
+  width: 100%;
+  max-width: 600px;
+  display:flex;align-items:center;
+  justify-content:center;
+  flex-direction:column;
+`;
+
+const SectionTitle = styled.h2`
+  font-size: 1.8rem;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
@@ -79,17 +146,16 @@ const Title = styled.h1`
   text-align: center;
 
   @media (max-width: 768px) {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
 `;
 
 const Paragraph = styled.p`
-  font-size: 1.2rem;
+  font-size: 1rem;
   line-height: 1.5;
-  text-align: start;
 
   @media (max-width: 768px) {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -105,10 +171,10 @@ const ImageContainer = styled.div`
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   margin: 20px 0;
-
+  
   @media (max-width: 768px) {
     max-width: 200px;
-    height: 200px;
+    height: 500px;
   }
 `;
 
@@ -122,7 +188,7 @@ const ArrowButton = styled.button`
   background: none;
   border: none;
   color: #fff;
-  font-size: 2rem;
+  font-size: 2em;
   cursor: pointer;
   margin: 0 10px;
   transition: color 0.3s ease;
@@ -151,76 +217,88 @@ const icons = [
 
 const AboutMe = () => {
   const [index, setIndex] = useState(0);
-  const [fadeIn, setFadeIn] = useState(true);
+  const [slideIn, setSlideIn] = useState(true);
+  const [direction, setDirection] = useState('up');
+  const [rotation, setRotation] = useState(0);
 
   const content = [
     {
-      title: 'Aspiring Learner',
-      paragraph: 'I am an enthusiastic learner exploring various domains to broaden my skills.',
+      title: 'Development Experience',
+      paragraph: 'Proficient in React, with expertise in building interactive user interfaces, problem-solving, working with APIs, and developing data-driven components.',
       image: image1,
       icon: icons[0]
     },
     {
-      title: 'Frontend Developer',
-      paragraph: 'I specialize in creating user interfaces and experiences using modern frontend technologies.',
+      title: 'Data Skills & Learning Journey',
+      paragraph: 'Actively learning Python, SQL,stats,power BI,Tabeleu, machine learning,deep learning,computer vision frameworks and nlp basics while working on personal projects in data visualization and predictive modeling.',
       image: image2,
       icon: icons[1]
     },
     {
-      title: 'Data Analyst',
-      paragraph: 'I analyze data to derive insights and make informed decisions for business growth.',
+      title: 'Career Goal',
+      paragraph: 'Aspiring to contribute to data-driven solutions by blending development expertise with analytical capabilities and continuously evolving as a data professional.',
       image: image3,
       icon: icons[2]
     },
-    {
-      title: 'Future Learner',
-      paragraph: 'I aspire to continually learn and adapt to new technologies and challenges.',
-      image: image4,
-      icon: icons[3]
-    }
-    // Add more content as needed
+
   ];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setFadeIn(false);
+      setSlideIn(false);
+      setDirection('up');
       setTimeout(() => {
-        setIndex((prevIndex) => (prevIndex + 1) % content.length);
-        setFadeIn(true);
-      }, 1000);
-    }, 5000); // Change content every 5 seconds
+        setIndex(prevIndex => (prevIndex + 1) % content.length);
+        setRotation(prevRotation => prevRotation - 90);
+        setSlideIn(true);
+      }, 500);
+    }, 10000); // Change content every 10 seconds
+
     return () => clearInterval(interval);
   }, [content.length]);
 
   const handleNext = () => {
-    setFadeIn(false);
+    setSlideIn(false);
+    setDirection('up');
     setTimeout(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % content.length);
-      setFadeIn(true);
+      setIndex(prevIndex => (prevIndex + 1) % content.length);
+      setRotation(prevRotation => prevRotation - 90);
+      setSlideIn(true);
     }, 500);
   };
 
   const handlePrev = () => {
-    setFadeIn(false);
+    setSlideIn(false);
+    setDirection('down');
     setTimeout(() => {
-      setIndex((prevIndex) => (prevIndex - 1 + content.length) % content.length);
-      setFadeIn(true);
+      setIndex(prevIndex => (prevIndex - 1 + content.length) % content.length);
+      setRotation(prevRotation => prevRotation + 90);
+      setSlideIn(true);
     }, 500);
   };
 
   return (
     <Container id="aboutme">
-      <ContentContainer>
-        <Section fadeIn={fadeIn}>
-          <Title>
-            {content[index].icon} {content[index].title}
-          </Title>
-          <Paragraph>{content[index].paragraph}</Paragraph>
-        </Section>
-        <ImageContainer>
-          <Image src={content[index].image} alt={content[index].title} />
-        </ImageContainer>
-      </ContentContainer>
+      <Title>About Me</Title>
+      <Paragraph style={{fontSize:'25px',fontWeight:'bold'}}>Passionate tech professional transitioning from Frontend Development to Data Analytics and Data Science.</Paragraph>
+      <CubeContainer>
+        <Cube rotation={rotation} slideIn={slideIn} direction={direction}>
+          <Front>
+            <Section>
+              <SectionTitle>
+                {content[index].icon} {content[index].title}
+              </SectionTitle>
+              <Paragraph>{content[index].paragraph}</Paragraph>
+            </Section>
+            <ImageContainer>
+              <Image src={content[index].image} alt={content[index].title} />
+            </ImageContainer>
+          </Front>
+          <Back />
+          <Side rotate="90deg" />
+          <Side rotate="-90deg" />
+        </Cube>
+      </CubeContainer>
       <ArrowContainer>
         <ArrowButton onClick={handlePrev}><IoArrowUpCircle /></ArrowButton>
         <ArrowButton onClick={handleNext}><IoArrowDownCircle /></ArrowButton>

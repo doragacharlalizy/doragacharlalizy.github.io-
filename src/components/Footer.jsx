@@ -1,7 +1,7 @@
-// src/components/Footer.js
 import React, { useState } from 'react';
-import {styled, keyframes} from 'styled-components';
+import { styled, keyframes } from 'styled-components';
 import { FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa';
+import eventBus from './eventBus';
 
 const colors = {
     richBlack: '#0d1b2a',
@@ -20,7 +20,8 @@ const gradientBackground = keyframes`
 const FooterContainer = styled.footer`
     background: linear-gradient(270deg, #1b263b, #273469ff, #1e2749ff);
     background-size: 600% 600%;
-    animation: ${gradientBackground} 15s ease infinite;    padding: 40px 20px;
+    animation: ${gradientBackground} 15s ease infinite;    
+    padding: 40px 20px;
     position: relative;
     overflow: hidden;
 
@@ -53,7 +54,7 @@ const AccordionContainer = styled.div`
 const Section = styled.div`
     min-width: 200px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-
+    color: ${colors.platinum};
     @media (max-width: 768px) {
         border-bottom: 1px solid ${colors.silverLakeBlue};
         padding-bottom: 10px;
@@ -117,8 +118,10 @@ const AccordionButton = styled.div`
     font-size: 1.2rem;
     font-weight: bold;
     transition: background 0.3s ease;
+    background: ${props => (props.isOpen ? colors.yinmnBlue : 'transparent')};
 
     &:hover {
+        background: ${colors.yinmnBlue};
     }
 `;
 
@@ -135,8 +138,13 @@ const AccordionContent = styled.div`
 const Footer = () => {
     const [openSection, setOpenSection] = useState(null);
 
-    const toggleSection = (section) => {
-        setOpenSection(openSection === section ? null : section);
+    const handleAccordionClick = (section) => {
+        setOpenSection(prevSection => (prevSection === section ? null : section));
+    };
+
+    const handleNavClick = (tab) => {
+        eventBus.emit('activateTab', tab);
+        document.getElementById('knowmore').scrollIntoView({ behavior: 'smooth' });
     };
 
     return (
@@ -144,65 +152,74 @@ const Footer = () => {
             <FooterContent>
                 <Section>
                     <SectionTitle>My Details</SectionTitle>
-                    <div>Name: Your Name</div>
-                    <div>Location: Your City, Country</div>
-                    <div>Email: your-email@example.com</div>
-                    <div>Phone: +123-456-7890</div>
+                    <div>Name: Lizy Doragacharla</div>
+                    <div>Location: Tenali, India</div>
+                    <div>Email: lizydoragacharla@gmail.com</div>
+                    <div>Phone: +91 8106868075</div>
                 </Section>
                 <Section>
                     <SectionTitle>Topics</SectionTitle>
-                    <NavLink href="#home">Home</NavLink>
-                    <NavLink href="#skills">Skills</NavLink>
-                    <NavLink href="#projects">Projects</NavLink>
-                    <NavLink href="#education">Education</NavLink>
-                    <NavLink href="#experience">Experience</NavLink>
+                    <NavLink onClick={() => handleNavClick('Skills')}>Skills</NavLink>
+                    <NavLink onClick={() => handleNavClick('Certificates')}>Certificates</NavLink>
+                    <NavLink onClick={() => handleNavClick('Education')}>Education</NavLink>
+                    <NavLink onClick={() => handleNavClick('Experience')}>Experience</NavLink>
+                    <NavLink onClick={() => handleNavClick('Projects')}>Projects</NavLink>
                 </Section>
                 <Section>
                     <SectionTitle>Connect</SectionTitle>
-                    <NavLink href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                    <NavLink href="https://www.linkedin.com/in/lizy-d-371971233" target="_blank" rel="noopener noreferrer">
                         <FaLinkedin /> LinkedIn
                     </NavLink>
-                    <NavLink href="https://www.github.com" target="_blank" rel="noopener noreferrer">
+                    <NavLink href="https://github.com/doragacharlalizy" target="_blank" rel="noopener noreferrer">
                         <FaGithub /> GitHub
                     </NavLink>
-                    <NavLink href="mailto:your-email@example.com">
+                    <NavLink href="mailto:lizydoragacharla@gmail.com">
                         <FaEnvelope /> Let's Connect
                     </NavLink>
                 </Section>
             </FooterContent>
             <AccordionContainer>
-                <AccordionButton onClick={() => toggleSection('details')}>
+                <AccordionButton
+                    isOpen={openSection === 'details'}
+                    onClick={() => handleAccordionClick('details')}
+                >
                     My Details
                 </AccordionButton>
                 <AccordionContent isOpen={openSection === 'details'}>
-                    <div>Name: Your Name</div>
-                    <div>Location: Your City, Country</div>
-                    <div>Email: your-email@example.com</div>
-                    <div>Phone: +123-456-7890</div>
+                    <div>Name: Lizy Doragacharla</div>
+                    <div>Location: Tenali, India</div>
+                    <div>Email: lizydoragacharla@gmail.com</div>
+                    <div>Phone: +91 8106868075</div>
                 </AccordionContent>
                 
-                <AccordionButton onClick={() => toggleSection('topics')}>
+                <AccordionButton
+                    isOpen={openSection === 'topics'}
+                    onClick={() => handleAccordionClick('topics')}
+                >
                     Topics
                 </AccordionButton>
                 <AccordionContent isOpen={openSection === 'topics'}>
-                    <NavLink href="#home">Home</NavLink>
-                    <NavLink href="#skills">Skills</NavLink>
-                    <NavLink href="#projects">Projects</NavLink>
-                    <NavLink href="#education">Education</NavLink>
-                    <NavLink href="#experience">Experience</NavLink>
+                    <NavLink onClick={() => handleNavClick('Skills')}>Skills</NavLink>
+                    <NavLink onClick={() => handleNavClick('Certificates')}>Certificates</NavLink>
+                    <NavLink onClick={() => handleNavClick('Education')}>Education</NavLink>
+                    <NavLink onClick={() => handleNavClick('Experience')}>Experience</NavLink>
+                    <NavLink onClick={() => handleNavClick('Projects')}>Projects</NavLink>
                 </AccordionContent>
 
-                <AccordionButton onClick={() => toggleSection('connect')}>
+                <AccordionButton
+                    isOpen={openSection === 'connect'}
+                    onClick={() => handleAccordionClick('connect')}
+                >
                     Connect
                 </AccordionButton>
                 <AccordionContent isOpen={openSection === 'connect'}>
-                    <NavLink href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+                    <NavLink href="https://www.linkedin.com/in/lizy-d-371971233" target="_blank" rel="noopener noreferrer">
                         <FaLinkedin /> LinkedIn
                     </NavLink>
-                    <NavLink href="https://www.github.com" target="_blank" rel="noopener noreferrer">
+                    <NavLink href="https://github.com/doragacharlalizy" target="_blank" rel="noopener noreferrer">
                         <FaGithub /> GitHub
                     </NavLink>
-                    <NavLink href="mailto:your-email@example.com">
+                    <NavLink href="mailto:lizydoragacharla@gmail.com">
                         <FaEnvelope /> Let's Connect
                     </NavLink>
                 </AccordionContent>

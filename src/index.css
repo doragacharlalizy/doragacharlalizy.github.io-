@@ -1,5 +1,9 @@
+/* src/index.css */
 body {
   margin: 0;
-  background:
-      #273469ff
+  background-color: #273469ff; /* Default background color */
+}
+
+* {
+  box-sizing: border-box;
 }

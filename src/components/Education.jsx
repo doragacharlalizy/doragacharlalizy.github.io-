@@ -10,12 +10,19 @@ const Container = styled.div`
   color: #e0e1ddff;
 `;
 
-const Title = styled.h2`
-  font-size: 2.5em;
+const Title = styled.h1`
+  font-size: 3rem;
   margin-bottom: 30px;
   text-align: center;
-`;
+  color: #fafaff;
 
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+    
+  @media (max-width: 480px) {
+    font-size: 1.5em;
+  }
+`;
 const Timeline = styled.div`
   display: flex;
   flex-direction: column;
@@ -135,19 +142,19 @@ const Education = () => {
       title: 'SSC',
       duration: '2017-2018',
       institution: 'Keshava Reddy High School',
-      details: 'Achieved 10.00 GPA',
+      details: 'Achieved 9.5 GPA',
     },
     {
       title: 'Intermediate (MPC)',
       duration: '2018-2020',
       institution: 'Tirumala Junior College, Katheru',
-      details: 'Achieved 96% marks',
+      details: 'Achieved 9.8 CGPA',
     },
     {
       title: 'B.Tech (CSE)',
       duration: '2020-2024',
       institution: 'Adikavi Nannaya University, Rajanagaram',
-      details: 'Achieved 8.8 CGPA',
+      details: 'Achieved 9.1 CGPA',
     },
   ];
 

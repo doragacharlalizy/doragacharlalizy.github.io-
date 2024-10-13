@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import profileImage from '../assets/doragacharla_lizy.jpg';
+import sidebarImage from '../assets/doragacharla_lizy3.jpg';
 
 const colors = {
   gunmetal: '#30343fff',
@@ -109,7 +110,7 @@ const NavLinks = styled.div`
     top: 0;
     left: 0;
     height: 100vh;
-    width: 30%;
+    width: 40%;
     background-color: ${colors.spaceCadet};
     transform: ${(props) => (props.open ? 'translateX(0)' : 'translateX(-100%)')};
     transition: transform 0.3s ease-in-out;
@@ -130,7 +131,7 @@ const SidebarHeader = styled.div`
 `;
 
 const SidebarLogo = styled.div`
-  background-image: url(${profileImage});
+  background-image: url(${sidebarImage});
   background-size: cover;
   background-position: center;
   width: 80px;
